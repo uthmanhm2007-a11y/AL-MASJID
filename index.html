@@ -1,0 +1,1313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#183c32">
+  <title>AL-MASJID | Mosque & Community</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #173a34;
+      --muted: #6a7c75;
+      --green: #126b57;
+      --green-dark: #0c4038;
+      --green-light: #e7f2ec;
+      --paper: #f7faf8;
+      --line: #dce7e1;
+      --gold: #b78a4c;
+      --rose: #a35445;
+      --shadow: 0 18px 50px rgba(14, 48, 39, .13);
+      font-family: "Manrope", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; background: var(--paper); color: var(--ink); }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    button:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid rgba(196, 147, 72, .5); outline-offset: 2px; }
+    .topbar { height: 78px; display: flex; align-items: center; justify-content: space-between; padding: 0 max(5vw, calc((100vw - 1200px) / 2)); border-bottom: 1px solid var(--line); background: rgba(251,250,246,.95); gap: 20px; }
+    .brand { display: flex; align-items: center; gap: 12px; color: var(--green); text-decoration: none; flex: 0 0 auto; }
+    .brand-mark { width: 40px; height: 40px; border: 1px solid #d5c19d; border-radius: 50%; display: grid; place-items: center; color: var(--gold); font: 24px Georgia, serif; }
+    .brand-name { font: 600 18px "Playfair Display", Georgia, serif; letter-spacing: 1px; }
+    .brand-sub { display: block; margin-top: 2px; color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: 1.7px; }
+    .mosque-picker { display: grid; gap: 3px; min-width: 145px; }
+    .mosque-picker label { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+    .mosque-picker select { max-width: 190px; padding: 5px 25px 5px 8px; border: 1px solid var(--line); border-radius: 3px; background: white; color: var(--green); font-size: 11px; font-weight: 600; }
+    .language-picker { display: grid; gap: 3px; min-width: 96px; }
+    .language-picker label { color: var(--muted); font-size: 9px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+    .language-picker select { max-width: 150px; padding: 5px 24px 5px 8px; border: 1px solid var(--line); border-radius: 3px; background: white; color: var(--green); font-size: 11px; font-weight: 600; }
+    .auth-language-picker { margin-bottom: 20px; }
+    html[dir="rtl"] .hero-meta { right: auto; left: 28px; text-align: left; }
+    .nav { display: flex; align-items: center; gap: 6px; }
+    .nav button, .account-button { padding: 10px 13px; border: 0; border-radius: 4px; background: transparent; color: #64716b; font-size: 13px; font-weight: 600; }
+    .nav button:hover, .nav button.active { background: var(--green-light); color: var(--green); }
+    .account-area { display: flex; align-items: center; justify-content: flex-end; gap: 9px; min-width: 150px; }
+    .account-button { border: 1px solid #d9ded8; color: var(--green); }
+    .account-button.primary { background: var(--green); border-color: var(--green); color: white; }
+    .account-button.primary:hover { background: var(--green-dark); }
+    .user-name { font-size: 12px; font-weight: 600; color: var(--green); white-space: nowrap; }
+    .page { width: min(1120px, 90vw); margin: 36px auto 80px; }
+    .view { display: none; animation: appear .28s ease both; }
+    .view.active { display: block; }
+    @keyframes appear { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+    .hero { min-height: 295px; display: flex; align-items: end; padding: 36px 40px; position: relative; overflow: hidden; border-radius: 6px; background: #193d32 url("https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=1800&q=85") center 48% / cover; color: white; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(14,39,31,.91) 0%, rgba(14,39,31,.67) 48%, rgba(14,39,31,.12) 100%); }
+    .hero-copy { position: relative; max-width: 590px; }
+    .eyebrow { margin: 0 0 12px; color: #e7c68f; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 { margin-bottom: 10px; font: 500 42px/1.1 "Playfair Display", Georgia, serif; }
+    .hero p:last-child { margin-bottom: 0; color: rgba(255,255,255,.82); font-size: 14px; }
+    .hero-meta { position: absolute; right: 28px; bottom: 25px; padding: 13px 15px; border: 1px solid rgba(255,255,255,.3); border-radius: 4px; background: rgba(15,35,29,.46); color: white; text-align: right; backdrop-filter: blur(7px); }
+    .hero-meta strong { display: block; font-size: 13px; }
+    .hero-meta span { display: block; color: rgba(255,255,255,.77); font-size: 11px; }
+    .hero-meta #hijri-today-label { margin: 3px 0 7px; color: #e7c68f; font-size: 10px; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin: 34px 0 16px; }
+    .section-heading h2 { margin: 0; font: 600 23px "Playfair Display", Georgia, serif; }
+    .section-heading p { margin: 5px 0 0; color: var(--muted); font-size: 12px; }
+    .text-link { border: 0; padding: 7px 0; background: none; color: var(--green); font-size: 12px; font-weight: 700; }
+    .prayer-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; }
+    .prayer-card { min-height: 105px; padding: 17px 15px; border: 1px solid var(--line); border-radius: 4px; background: white; }
+    .prayer-card.next { border-color: var(--green); background: var(--green); color: white; }
+    .prayer-card .name { color: var(--muted); font-size: 11px; font-weight: 600; }
+    .prayer-card.next .name { color: #d3e2d7; }
+    .prayer-card .time { margin-top: 10px; font: 600 22px "Playfair Display", Georgia, serif; }
+    .prayer-card .next-label { margin-top: 4px; color: #d3e2d7; font-size: 10px; }
+    .lower-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 34px; margin-top: 30px; }
+    .event-list { border-top: 1px solid var(--line); }
+    .event-row { display: grid; grid-template-columns: 55px 1fr auto; align-items: center; gap: 13px; padding: 14px 0; border-bottom: 1px solid var(--line); }
+    .event-date { width: 46px; height: 48px; display: grid; align-content: center; justify-items: center; border-radius: 3px; background: var(--green-light); color: var(--green); }
+    .event-date strong { font: 600 19px "Playfair Display", Georgia, serif; line-height: 1; }
+    .event-date span { margin-top: 4px; font-size: 9px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+    .event-title { margin-bottom: 4px; font-size: 13px; font-weight: 700; }
+    .event-detail { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
+    .event-tag { color: #91703d; font-size: 10px; font-weight: 700; }
+    .notice { min-height: 100%; padding: 24px; border: 1px solid #e8dfcb; border-radius: 4px; background: #f5f0e5; }
+    .notice-mark { color: var(--gold); font: 24px Georgia, serif; }
+    .notice h3 { margin: 13px 0 8px; font: 600 19px "Playfair Display", Georgia, serif; }
+    .notice p { margin-bottom: 0; color: #686e61; font-size: 12px; line-height: 1.7; }
+    .page-title { display: flex; align-items: end; justify-content: space-between; margin-bottom: 25px; }
+    .page-title h1 { margin: 0; font: 600 34px "Playfair Display", Georgia, serif; }
+    .page-title p { margin: 7px 0 0; color: var(--muted); font-size: 13px; }
+    .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: white; }
+    table { width: 100%; border-collapse: collapse; text-align: left; }
+    th { padding: 14px 18px; background: #f4f4ef; color: #68746d; font-size: 10px; letter-spacing: 1px; text-transform: uppercase; }
+    td { padding: 16px 18px; border-top: 1px solid var(--line); font-size: 13px; }
+    td:first-child { font-weight: 700; }
+    .time-cell { font: 600 18px "Playfair Display", Georgia, serif; color: var(--green); }
+    .table-note { margin: 14px 0 0; color: var(--muted); font-size: 11px; }
+    .calendar-layout { display: grid; grid-template-columns: 1.25fr .75fr; gap: 28px; }
+    .calendar-box { padding: 22px; border: 1px solid var(--line); border-radius: 4px; background: white; }
+    .month-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .month-bar h2 { margin: 0; font: 600 21px "Playfair Display", Georgia, serif; }
+    .month-heading p { margin: 4px 0 0; color: var(--muted); font-size: 10px; }
+    .month-controls { display: flex; gap: 6px; }
+    .icon-button { width: 34px; height: 34px; border: 1px solid var(--line); border-radius: 3px; background: white; color: var(--green); font-size: 17px; }
+    .calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+    .weekday { padding: 8px 0; color: var(--muted); font-size: 10px; font-weight: 700; text-transform: uppercase; }
+    .day { min-height: 52px; display: grid; place-items: center; position: relative; border-radius: 3px; color: #45554d; font-size: 12px; }
+    .day { align-content: center; gap: 2px; }
+    .day-gregorian { font-weight: 600; }
+    .day-hijri { color: var(--muted); font-size: 9px; }
+    .day.blank { pointer-events: none; }
+    .day.today { background: var(--green); color: white; font-weight: 700; }
+    .day.today .day-hijri { color: #d3e2d7; }
+    .day.has-event::after { content: ""; width: 4px; height: 4px; position: absolute; bottom: 7px; border-radius: 50%; background: var(--gold); }
+    .day.today.has-event::after { background: white; }
+    .day:not(.blank):hover { background-color: var(--green-light); }
+    .day.today:hover { background: var(--green); }
+    .calendar-events h2 { margin: 0 0 14px; font: 600 21px "Playfair Display", Georgia, serif; }
+    .empty-state { padding: 22px 0; color: var(--muted); font-size: 12px; }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+    .admin-panel { padding: 22px; border: 1px solid var(--line); border-radius: 4px; background: white; }
+    .admin-panel h2 { margin: 0 0 5px; font: 600 20px "Playfair Display", Georgia, serif; }
+    .panel-intro { margin-bottom: 20px; color: var(--muted); font-size: 11px; }
+    .settings-table { min-width: 850px; }
+    .settings-table input { width: 100%; min-width: 110px; padding: 8px; border: 1px solid #dfe2dc; border-radius: 3px; font-size: 11px; }
+    .settings-table td:first-child { white-space: nowrap; }
+    .plan-table { min-width: 780px; }
+    .plan-table td { min-width: 170px; padding: 8px; }
+    .plan-cell-fields { display: grid; gap: 5px; }
+    .plan-cell-fields input { width: 100%; min-width: 0; padding: 7px; border: 1px solid #dfe2dc; border-radius: 3px; font-size: 10px; }
+    .plan-cell-fields .ayah-range { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+    .plan-entry { display: grid; gap: 3px; min-width: 130px; }
+    .plan-entry strong { color: var(--green); font-size: 11px; }
+    .plan-entry span { color: var(--muted); font-size: 10px; }
+    .field { display: grid; gap: 7px; margin-bottom: 13px; }
+    .field label { color: #4c5a53; font-size: 11px; font-weight: 700; }
+    .field input, .field textarea, .time-edit input { width: 100%; padding: 10px 11px; border: 1px solid #dfe2dc; border-radius: 3px; background: #fff; color: var(--ink); font-size: 12px; }
+    .field textarea { min-height: 78px; resize: vertical; }
+    .save-button { min-height: 39px; padding: 0 16px; border: 0; border-radius: 3px; background: var(--green); color: white; font-size: 12px; font-weight: 700; }
+    .save-button:hover { background: var(--green-dark); }
+    .form-message { min-height: 16px; margin: 10px 0 0; color: var(--green); font-size: 11px; }
+    .admin-events { grid-column: 1 / -1; }
+    .admin-event-list { display: grid; gap: 0; }
+    .ramadan-days { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; }
+    .ramadan-day { min-height: 78px; padding: 10px; border: 1px solid var(--line); border-radius: 3px; background: white; }
+    .ramadan-day.today { border-color: var(--green); background: var(--green); color: white; }
+    .ramadan-day strong, .ramadan-day span { display: block; }
+    .ramadan-day strong { font: 600 18px "Playfair Display", Georgia, serif; }
+    .ramadan-day span { margin-top: 5px; color: var(--muted); font-size: 10px; }
+    .ramadan-day.today span { color: #d3e2d7; }
+    .ramadan-programs { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 24px; }
+    .program-panel { padding: 20px; border: 1px solid var(--line); border-radius: 4px; background: white; }
+    .program-panel h2 { margin: 0 0 8px; font: 600 20px "Playfair Display", Georgia, serif; }
+    .program-imam { margin: 0 0 15px; color: var(--muted); font-size: 12px; }
+    .recitation-list { display: grid; gap: 8px; }
+    .recitation-row { display: grid; grid-template-columns: 72px 1fr; gap: 10px; padding: 9px 0; border-top: 1px solid var(--line); font-size: 12px; }
+    .recitation-row strong { color: var(--green); }
+    .dual-date { display: block; margin-top: 4px; color: var(--muted); font-size: 9px; }
+    .admin-form-section { grid-column: 1 / -1; }
+    .admin-event-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
+    .delete-button { border: 0; background: none; color: var(--rose); font-size: 11px; font-weight: 700; }
+    .footer { padding: 24px 5vw; border-top: 1px solid var(--line); color: var(--muted); text-align: center; font-size: 10px; letter-spacing: .4px; }
+    .app-status { position: fixed; top: 12px; left: 50%; z-index: 20; max-width: min(520px, 90vw); padding: 10px 14px; transform: translateX(-50%); border: 1px solid #d9ded8; border-radius: 4px; background: white; box-shadow: var(--shadow); color: var(--ink); font-size: 12px; }
+    .app-status.error { border-color: #d7a69d; color: var(--rose); }
+    .overlay { position: fixed; inset: 0; z-index: 4; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(14,33,27,.56); }
+    .overlay.open { display: flex; }
+    .auth-box { width: min(420px, 100%); padding: 30px; position: relative; border-radius: 5px; background: var(--paper); box-shadow: var(--shadow); }
+    .auth-box h2 { margin: 0 0 6px; font: 600 25px "Playfair Display", Georgia, serif; }
+    .auth-copy { margin-bottom: 22px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+    .close-button { position: absolute; top: 13px; right: 14px; border: 0; background: none; color: #536159; font-size: 22px; }
+    .auth-switch { margin-top: 15px; color: var(--muted); text-align: center; font-size: 11px; }
+    .auth-switch button { border: 0; background: none; color: var(--green); font-weight: 700; }
+    .auth-message { min-height: 16px; margin: 9px 0 0; color: var(--rose); font-size: 11px; }
+    .member-note { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; line-height: 1.5; }
+    body.auth-required { min-height: 100vh; background: var(--green-dark); }
+    body.auth-required .topbar, body.auth-required main, body.auth-required .footer { display: none; }
+    .overlay.auth-gate { z-index: 10; background: var(--green-dark); }
+    .auth-gate .close-button { display: none; }
+    @media (max-width: 800px) {
+      .topbar { height: auto; min-height: 72px; flex-wrap: wrap; padding: 13px 5vw; gap: 8px; }
+      .nav { order: 3; width: 100%; justify-content: center; }
+      .nav button { padding: 8px 10px; }
+      .mosque-picker { order: 2; margin-left: auto; min-width: 120px; }
+      .language-picker { order: 2; min-width: 92px; }
+      .mosque-picker select { max-width: 150px; }
+      .account-area { order: 2; min-width: 0; }
+      .page { margin-top: 23px; }
+      .prayer-grid { grid-template-columns: repeat(3, 1fr); }
+      .lower-grid { grid-template-columns: 1fr; gap: 15px; }
+      .calendar-layout { grid-template-columns: 1fr; }
+      .admin-grid { grid-template-columns: 1fr; }
+      .admin-events { grid-column: auto; }
+      .ramadan-days { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+      .ramadan-programs { grid-template-columns: 1fr; }
+      .admin-form-section { grid-column: auto; }
+    }
+    @media (max-width: 520px) {
+      .brand-name { font-size: 16px; }
+      .account-area { gap: 5px; }
+      .language-picker select { max-width: 112px; }
+      .account-button { padding: 8px 9px; font-size: 11px; }
+      .user-name { max-width: 90px; overflow: hidden; text-overflow: ellipsis; }
+      .nav { justify-content: space-between; }
+      .nav button { padding: 8px 7px; font-size: 11px; }
+      .nav { gap: 1px; }
+      .hero { min-height: 260px; padding: 26px 22px; background-position: 58% center; }
+      .hero h1 { font-size: 34px; }
+      .hero-meta { right: 14px; bottom: 15px; padding: 8px 10px; }
+      .hero-copy { max-width: 80%; }
+      .section-heading h2 { font-size: 21px; }
+      .prayer-grid { gap: 7px; }
+      .prayer-card { min-height: 92px; padding: 13px 11px; }
+      .prayer-card .time { font-size: 19px; }
+      .page-title h1 { font-size: 29px; }
+      .calendar-box { padding: 13px; }
+      .day { min-height: 43px; }
+      .day-hijri { font-size: 8px; }
+      .ramadan-days { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+      .ramadan-day { min-height: 68px; padding: 8px; }
+      .event-row { grid-template-columns: 48px 1fr; }
+      .event-tag { display: none; }
+    }
+    body { font-family: "Manrope", sans-serif; background: #f3f7f4; }
+    html[lang="ar"] body { font-family: "Noto Naskh Arabic", serif; }
+    h1, h2, h3, .brand-name, .prayer-card .time, .event-date strong, .time-cell, .month-bar h2 { font-family: "Cormorant Garamond", "Noto Naskh Arabic", Georgia, serif; }
+    .topbar { position: sticky; top: 0; z-index: 3; min-height: 76px; height: auto; border-bottom-color: #d8e5de; background: rgba(250, 252, 250, .96); box-shadow: 0 5px 22px rgba(18, 54, 43, .06); backdrop-filter: blur(14px); }
+    .brand-mark { border: 0; border-radius: 12px; background: var(--green-dark); color: #e8c994; box-shadow: inset 0 0 0 1px rgba(255,255,255,.16); }
+    .brand-sub { letter-spacing: 1.4px; }
+    .nav { gap: 3px; padding: 4px; border: 1px solid #e3ebe6; border-radius: 8px; background: #f1f6f2; }
+    .nav button { border-radius: 6px; transition: background .18s ease, color .18s ease; }
+    .nav button:hover, .nav button.active { background: #fff; color: var(--green-dark); box-shadow: 0 2px 8px rgba(18, 54, 43, .08); }
+    .account-button, .mosque-picker select, .language-picker select { border-radius: 6px; }
+    .account-button.primary, .save-button { background: var(--green); box-shadow: 0 4px 10px rgba(18, 107, 87, .16); transition: transform .18s ease, background .18s ease, box-shadow .18s ease; }
+    .account-button.primary:hover, .save-button:hover { background: var(--green-dark); box-shadow: 0 6px 15px rgba(12, 64, 56, .22); transform: translateY(-1px); }
+    .page { width: min(1160px, 90vw); margin-top: 32px; }
+    .admin-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .admin-panel { min-width: 0; }
+    .table-wrap { max-width: 100%; }
+    .hero { min-height: 330px; border-radius: 8px; box-shadow: var(--shadow); }
+    .hero h1 { font-size: 48px; }
+    .hero-meta { border-radius: 7px; }
+    .section-heading { margin-top: 40px; }
+    .section-heading h2, .calendar-events h2 { color: var(--green-dark); }
+    .prayer-card, .calendar-box, .admin-panel, .program-panel { border-color: var(--line); border-radius: 7px; box-shadow: 0 5px 20px rgba(18, 54, 43, .04); }
+    .prayer-card { transition: transform .18s ease, box-shadow .18s ease; }
+    .prayer-card:not(.next):hover { transform: translateY(-2px); box-shadow: 0 9px 22px rgba(18, 54, 43, .1); }
+    .prayer-card.next, .day.today, .ramadan-day.today { border-color: var(--green-dark); background: var(--green-dark); }
+    .notice { border-color: #d8e8df; border-radius: 7px; background: #eaf3ed; }
+    .event-date { border-radius: 6px; background: #e8f2ed; }
+    .table-wrap { border-color: var(--line); border-radius: 7px; }
+    th { background: #edf4ef; color: #526b61; }
+    .day { border-radius: 5px; }
+    .day:not(.blank):hover { background-color: #e7f2ec; }
+    .ramadan-day { border-radius: 6px; }
+    .field[hidden] { display: none !important; }
+    .field input, .field textarea, .time-edit input, .settings-table input, .plan-cell-fields input { border-color: #d6e2db; border-radius: 5px; }
+    .field input, .field textarea, .time-edit input { min-height: 43px; }
+    .field input:focus, .field textarea:focus, .settings-table input:focus, .plan-cell-fields input:focus { border-color: #55a68a; outline: 3px solid rgba(58, 145, 112, .14); }
+    .save-button { min-height: 43px; border-radius: 6px; }
+    .icon-button { border-radius: 6px; }
+    .footer { margin-top: 30px; border-color: var(--line); background: #f7faf8; }
+    body.auth-required { min-height: 100vh; background: #0b3029 url("https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&w=2000&q=85") center 48% / cover fixed; }
+    body.auth-required::before { content: ""; position: fixed; inset: 0; z-index: -1; background: rgba(7, 37, 31, .75); }
+    .overlay.auth-gate { justify-content: flex-end; padding: clamp(20px, 7vw, 100px); background: transparent; }
+    .auth-box { width: min(448px, 100%); padding: 34px 38px; border: 1px solid rgba(255,255,255,.72); border-top: 3px solid var(--gold); border-radius: 8px; background: rgba(250, 252, 250, .98); box-shadow: 0 26px 70px rgba(0, 20, 15, .28); }
+    .auth-brand { display: flex; align-items: center; gap: 11px; margin-bottom: 20px; color: var(--green-dark); }
+    .auth-brand-mark { width: 42px; height: 42px; display: grid; place-items: center; border-radius: 12px; background: var(--green-dark); color: #e8c994; font: 26px Georgia, serif; }
+    .auth-brand strong, .auth-brand small { display: block; }
+    .auth-brand strong { font: 700 14px "Manrope", sans-serif; letter-spacing: 1.4px; }
+    .auth-brand small { margin-top: 3px; color: var(--muted); font: 700 8px "Manrope", sans-serif; letter-spacing: 1.2px; }
+    .auth-box h2 { margin-bottom: 3px; color: var(--green-dark); font-size: 32px; }
+    .auth-language-picker { margin: 12px 0 14px; }
+    .auth-copy { margin-bottom: 20px; }
+    .auth-switch { padding-top: 14px; border-top: 1px solid var(--line); }
+    .member-note { font-size: 9px; }
+    .app-status { border-radius: 7px; }
+    @media (max-width: 800px) {
+      .topbar { position: relative; }
+      .hero h1 { font-size: 40px; }
+      .overlay.auth-gate { justify-content: center; padding: 18px; }
+      .auth-box { padding: 28px 25px; }
+      .admin-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+    .page-title { align-items: center; gap: 16px; }
+    .print-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid #cbdcd2; border-radius: 6px; background: #fff; color: var(--green-dark); font-size: 12px; font-weight: 700; }
+    .print-button:hover { border-color: var(--green); background: var(--green-light); }
+    .print-button:focus-visible { outline: 3px solid rgba(58, 145, 112, .24); outline-offset: 2px; }
+    @media print {
+      @page { size: A4 landscape; margin: 14mm; }
+      body * { visibility: hidden !important; }
+      body[data-print-page="prayers"] #view-prayers,
+      body[data-print-page="prayers"] #view-prayers *,
+      body[data-print-page="ramadan"] #view-ramadan .page-title,
+      body[data-print-page="ramadan"] #view-ramadan .page-title *,
+      body[data-print-page="ramadan"] #view-ramadan .ramadan-programs,
+      body[data-print-page="ramadan"] #view-ramadan .ramadan-programs * { visibility: visible !important; }
+      body[data-print-page="prayers"] #view-prayers,
+      body[data-print-page="ramadan"] #view-ramadan { display: block !important; position: fixed; inset: 0; width: 100%; margin: 0; padding: 0; background: #fff; }
+      body[data-print-page="ramadan"] #view-ramadan > :not(.page-title):not(.ramadan-programs) { display: none !important; }
+      body[data-print-page="ramadan"] #view-ramadan .ramadan-programs { display: block; margin-top: 6mm; }
+      body[data-print-page="ramadan"] #view-ramadan .program-panel { margin: 0 0 8mm; padding: 0; border: 0; box-shadow: none; break-inside: avoid; }
+      body[data-print-page="prayers"] .print-button,
+      body[data-print-page="ramadan"] .print-button { display: none !important; }
+      body[data-print-page="prayers"] .table-wrap,
+      body[data-print-page="ramadan"] .table-wrap { overflow: visible; border: 0; }
+      body[data-print-page="prayers"] table,
+      body[data-print-page="ramadan"] table { width: 100%; border-collapse: collapse; }
+      body[data-print-page="prayers"] th,
+      body[data-print-page="prayers"] td,
+      body[data-print-page="ramadan"] th,
+      body[data-print-page="ramadan"] td { padding: 7px 10px; border: 1px solid #9aaba2; color: #142e27; font-size: 10pt; }
+      body[data-print-page="prayers"] th,
+      body[data-print-page="ramadan"] th { background: #eaf1ed !important; print-color-adjust: exact; }
+    }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; scroll-behavior: auto !important; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home" aria-label="AL-MASJID home">
+      <span class="brand-mark" aria-hidden="true">☾</span>
+      <span><span class="brand-name">AL-MASJID</span><span class="brand-sub">MOSQUE &amp; COMMUNITY</span></span>
+    </a>
+    <div class="mosque-picker"><label for="mosque-selector">Viewing mosque</label><select id="mosque-selector" aria-label="Select a mosque"></select></div>
+    <div class="language-picker"><label for="language-select">Language</label><select id="language-select"><option value="en">English</option><option value="ar">العربية</option><option value="ha">Hausa</option></select></div>
+    <nav class="nav" aria-label="Main navigation">
+      <button class="active" data-view="home">Home</button>
+      <button data-view="prayers">Prayers</button>
+      <button data-view="calendar">Calendar</button>
+      <button data-view="ramadan">Ramadan</button>
+      <button data-view="admin" id="admin-nav" hidden>Admin</button>
+    </nav>
+    <div class="account-area" id="account-area"></div>
+  </header>
+
+  <div class="app-status" id="app-status" role="status" aria-live="polite" hidden></div>
+  <main class="page">
+    <section class="view active" id="view-home">
+      <div class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">A place to pray. A place to belong.</p>
+          <h1>Faith brings us<br>together.</h1>
+          <p>Prayer, learning and community, every day at AL-MASJID.</p>
+        </div>
+        <div class="hero-meta"><strong id="today-label"></strong><span id="hijri-today-label"></span><span id="hero-mosque-name">AL FATH Mosque</span></div>
+      </div>
+      <div class="section-heading">
+        <div><h2>Today's prayer times</h2><p id="next-prayer"></p></div>
+      </div>
+      <div class="prayer-grid" id="home-prayers"></div>
+      <div class="lower-grid">
+        <section>
+          <div class="section-heading" style="margin-top:0"><div><h2>Coming together</h2><p>What's happening at the mosque</p></div><button class="text-link" data-go="calendar">All events <span aria-hidden="true">→</span></button></div>
+          <div class="event-list" id="home-events"></div>
+        </section>
+        <aside class="notice"><span class="notice-mark" aria-hidden="true">✳</span><h3>Everyone is welcome.</h3><p>Join us for daily prayers, Friday congregation, community gatherings and a shared cup of tea. We look forward to seeing you.</p></aside>
+      </div>
+    </section>
+
+    <section class="view" id="view-prayers">
+      <div class="page-title"><div><h1>Prayers</h1><p id="prayers-mosque-label"></p></div><button class="print-button" type="button" data-print-page="prayers">Print prayer table</button></div>
+      <div class="table-wrap"><table><thead><tr><th>Prayer</th><th>Mu'azin</th><th>Adhan</th><th>Iqama</th><th>Imam</th></tr></thead><tbody id="prayer-table"></tbody></table></div>
+    </section>
+
+    <section class="view" id="view-calendar">
+      <div class="page-title"><div><h1>Mosque calendar</h1><p>Gatherings, classes and community events</p></div></div>
+      <div class="calendar-layout">
+        <div class="calendar-box"><div class="month-bar"><div class="month-heading"><h2 id="month-label"></h2><p id="hijri-month-label"></p></div><div class="month-controls"><button class="icon-button" id="prev-month" aria-label="Previous month">‹</button><button class="icon-button" id="next-month" aria-label="Next month">›</button></div></div><div class="calendar-grid" id="calendar-grid"></div></div>
+        <section class="calendar-events"><h2>Upcoming events</h2><div class="event-list" id="calendar-events"></div></section>
+      </div>
+    </section>
+
+    <section class="view" id="view-ramadan">
+      <div class="page-title"><div><h1>Ramadan</h1><p id="ramadan-mosque-label"></p></div><button class="print-button" type="button" data-print-page="ramadan">Print Ramadan tables</button></div>
+      <section><div class="section-heading" style="margin-top:0"><div><h2>Ramadan calendar</h2><p id="ramadan-range"></p></div></div><div class="ramadan-days" id="ramadan-days"></div></section>
+      <div class="ramadan-programs">
+        <section class="program-panel"><h2>Tarawih</h2><div class="table-wrap"><table class="plan-table"><thead><tr><th>Nights</th><th>First two taslim</th><th>Second two taslim</th><th>Witr</th></tr></thead><tbody id="tarawih-plan"></tbody></table></div></section>
+        <section class="program-panel"><h2>Tahajjud</h2><div class="table-wrap"><table class="plan-table"><thead><tr><th>Nights</th><th>First two taslim</th><th>Second two taslim</th><th>Witr</th></tr></thead><tbody id="tahajjud-plan"></tbody></table></div></section>
+      </div>
+    </section>
+
+    <section class="view" id="view-admin">
+      <div class="page-title"><div><h1>Admin workspace</h1><p>Manage the mosque timetable and community calendar</p></div></div>
+      <div class="admin-grid">
+        <form class="admin-panel" id="mosque-settings-form"><h2>Mosque details</h2><p class="panel-intro">Set the name shown to members for this mosque.</p><div class="field"><label for="mosque-name-input">Mosque name</label><input id="mosque-name-input" name="name" maxlength="60" required></div><button class="save-button" type="submit">Save mosque name</button><p class="form-message" id="mosque-settings-message" role="status"></p></form>
+        <form class="admin-panel admin-form-section" id="adhan-settings-form"><h2>Adhan &amp; imam settings</h2><p class="panel-intro">Set the caller, Adhan and Iqama times, and imam for each prayer.</p><div class="table-wrap"><table class="settings-table"><thead><tr><th>Prayer</th><th>Mu'azin</th><th>Adhan time</th><th>Iqama time</th><th>Imam</th></tr></thead><tbody id="adhan-edit-list"></tbody></table></div><button class="save-button" type="submit" style="margin-top:18px">Save prayer settings</button><p class="form-message" id="adhan-settings-message" role="status"></p></form>
+        <form class="admin-panel admin-form-section" id="ramadan-settings-form"><h2>Ramadan settings</h2><p class="panel-intro">Set the first date, then update the imam and timing details for each night.</p><div class="field" style="max-width:320px"><label for="ramadan-start">First day of Ramadan</label><input id="ramadan-start" name="startDate" type="date" required></div><h3>Tarawih · 20 nights</h3><div class="table-wrap"><table class="plan-table"><thead><tr><th>Nights</th><th>First two taslim</th><th>Second two taslim</th><th>Witr</th></tr></thead><tbody id="tarawih-edit-rows"></tbody></table></div><h3 style="margin-top:24px">Tahajjud · Nights 21–30</h3><div class="table-wrap"><table class="plan-table"><thead><tr><th>Nights</th><th>First two taslim</th><th>Second two taslim</th><th>Witr</th></tr></thead><tbody id="tahajjud-edit-rows"></tbody></table></div><button class="save-button" type="submit" style="margin-top:18px">Save Ramadan settings</button><p class="form-message" id="ramadan-settings-message" role="status"></p></form>
+        <form class="admin-panel" id="event-form"><h2>Post an event</h2><p class="panel-intro">Share a gathering or important date with the community.</p><div class="field"><label for="event-title">Event name</label><input id="event-title" name="title" maxlength="70" required placeholder="e.g. Community iftar"></div><div class="field"><label for="event-date">Date</label><input id="event-date" name="date" type="date" required></div><div class="field"><label for="event-time">Time</label><input id="event-time" name="time" type="time" required></div><div class="field"><label for="event-details">Details</label><textarea id="event-details" name="details" maxlength="220" placeholder="A few details for attendees"></textarea></div><button class="save-button" type="submit">Publish event</button><p class="form-message" id="event-message" role="status"></p></form>
+        <section class="admin-panel admin-events"><h2>Published events</h2><p class="panel-intro">Remove an event to take it off the community calendar.</p><div class="admin-event-list" id="admin-event-list"></div></section>
+        <section class="admin-panel" id="assignment-panel" hidden><h2>Assign a mosque administrator</h2><p class="panel-intro">Create a mosque and assign an existing member to manage its name, prayer times and events.</p><form id="assignment-form"><div class="field"><label for="new-mosque-name">New mosque name</label><input id="new-mosque-name" name="mosqueName" maxlength="60" required placeholder="e.g. Masjid An-Noor"></div><div class="field"><label for="admin-email">Member email</label><input id="admin-email" name="email" type="email" required placeholder="member@example.com"></div><button class="save-button" type="submit">Assign administrator</button><p class="form-message" id="assignment-message" role="status"></p></form></section>
+      </div>
+    </section>
+  </main>
+  <footer class="footer"><span id="footer-mosque-name">AL FATH</span> MOSQUE &amp; COMMUNITY <span aria-hidden="true">·</span> A community rooted in faith and care</footer>
+
+  <div class="overlay" id="auth-overlay" role="dialog" aria-modal="true" aria-labelledby="auth-title">
+    <div class="auth-box">
+      <button class="close-button" id="close-auth" aria-label="Close">×</button>
+      <div class="auth-brand"><span class="auth-brand-mark" aria-hidden="true">☾</span><span><strong>AL-MASJID</strong><small>MOSQUE &amp; COMMUNITY</small></span></div>
+      <h2 id="auth-title">Welcome to AL-MASJID</h2>
+      <div class="language-picker auth-language-picker"><label for="auth-language-select">Language</label><select id="auth-language-select"><option value="en">English</option><option value="ar">العربية</option><option value="ha">Hausa</option></select></div>
+      <p class="auth-copy" id="auth-copy"></p>
+      <form id="auth-form"><div class="field" id="name-field"><label for="auth-name">Full name</label><input id="auth-name" autocomplete="name" maxlength="50"></div><div class="field"><label for="auth-email">Email address</label><input id="auth-email" type="email" autocomplete="email" required maxlength="100"></div><div class="field"><label for="auth-password">Password</label><input id="auth-password" type="password" autocomplete="current-password" minlength="8" required></div><button class="save-button" id="auth-submit" type="submit" style="width:100%"></button><p class="auth-message" id="auth-message" role="status"></p></form>
+      <div class="auth-switch" id="auth-switch"></div>
+      <div class="member-note" id="storage-note">This demo stores accounts and mosque updates in this browser only. Use a shared backend before relying on it across devices.</div>
+    </div>
+  </div>
+
+  <script src="translations.js"></script>
+  <script src="supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    const SUPABASE_CONFIG = window.AL_FATH_SUPABASE_CONFIG || {};
+    const remoteConfigured = Boolean(SUPABASE_CONFIG.url && SUPABASE_CONFIG.anonKey);
+    const supabaseClient = remoteConfigured && window.supabase?.createClient
+      ? window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey)
+      : null;
+    const KEYS = { users: "alfath.users", session: "alfath.session", schedule: "alfath.schedule", events: "alfath.events", mosques: "alfath.mosques", schedules: "alfath.mosqueSchedules", mosqueEvents: "alfath.mosqueEvents", ramadan: "alfath.mosqueRamadan", selectedMosque: "alfath.selectedMosque", language: "alfath.language" };
+    const DEFAULT_SCHEDULE = [
+      { name: "Fajr", muazzin: "", adhan: "05:18", iqama: "05:40", imam: "" },
+      { name: "Dhuhr", muazzin: "", adhan: "12:08", iqama: "12:30", imam: "" },
+      { name: "Asr", muazzin: "", adhan: "15:31", iqama: "15:45", imam: "" },
+      { name: "Maghrib", muazzin: "", adhan: "17:47", iqama: "17:52", imam: "" },
+      { name: "Isha", muazzin: "", adhan: "19:04", iqama: "19:20", imam: "" },
+      { name: "Jumu'ah", muazzin: "", adhan: "13:00", iqama: "13:15", imam: "" }
+    ];
+    const PLAN_COLUMNS = ["firstTwo", "secondTwo", "witr"];
+    const read = (key, fallback) => {
+      try { const value = localStorage.getItem(key); return value ? JSON.parse(value) : fallback; }
+      catch { return fallback; }
+    };
+    const write = (key, value) => localStorage.setItem(key, JSON.stringify(value));
+    const users = read(KEYS.users, []);
+    let mosques = read(KEYS.mosques, []);
+    if (!mosques.length) {
+      mosques = [{ id: "alfath-main", name: "AL FATH", ownerId: null }];
+      if (!remoteConfigured) write(KEYS.mosques, mosques);
+    }
+    const initialAdmin = users.find((user) => user.role === "superadmin") || users.find((user) => user.role === "admin");
+    if (initialAdmin) {
+      initialAdmin.role = "superadmin";
+      mosques[0].ownerId ||= initialAdmin.id;
+      users.forEach((user) => { if (user !== initialAdmin && user.role === "admin") user.role = "member"; });
+      if (!remoteConfigured) {
+        write(KEYS.users, users);
+        write(KEYS.mosques, mosques);
+      }
+    }
+    let mosqueSchedules = read(KEYS.schedules, null);
+    if (!mosqueSchedules) {
+      mosqueSchedules = { [mosques[0].id]: read(KEYS.schedule, DEFAULT_SCHEDULE).map((prayer) => ({ ...prayer })) };
+      if (!remoteConfigured) write(KEYS.schedules, mosqueSchedules);
+    }
+    let mosqueEvents = read(KEYS.mosqueEvents, null);
+    if (!mosqueEvents) {
+      mosqueEvents = { [mosques[0].id]: read(KEYS.events, []) };
+      if (!remoteConfigured) write(KEYS.mosqueEvents, mosqueEvents);
+    }
+    let ramadanByMosque = read(KEYS.ramadan, {});
+    let selectedMosqueId = read(KEYS.selectedMosque, mosques[0].id);
+    if (!mosques.some((mosque) => mosque.id === selectedMosqueId)) selectedMosqueId = mosques[0].id;
+    let schedule = normalizeSchedule(mosqueSchedules[selectedMosqueId] || DEFAULT_SCHEDULE);
+    mosqueSchedules[selectedMosqueId] = schedule;
+    let events = mosqueEvents[selectedMosqueId] || [];
+    let ramadanSettings = ramadanByMosque[selectedMosqueId] || null;
+    let currentUser = null;
+    let authMode = "login";
+    let calendarCursor = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const $ = (selector) => document.querySelector(selector);
+    const LANGUAGE_SETTINGS = { en: { locale: "en-US", direction: "ltr" }, ar: { locale: "ar", direction: "rtl" }, ha: { locale: "ha-NG", direction: "ltr" } };
+    const dictionaries = window.AL_FATH_TRANSLATIONS || {};
+    const originalText = new WeakMap();
+    const originalAttributes = new WeakMap();
+    let languagePreference = localStorage.getItem(KEYS.language) || "en";
+
+    function translateText(value, variables = {}) {
+      const dictionary = dictionaries[languagePreference] || {};
+      let output = dictionary[value];
+      if (output === undefined) {
+        for (const [template, translated] of Object.entries(dictionary)) {
+          const placeholder = template.match(/\{(\w+)\}/);
+          if (!placeholder || (template.match(/\{\w+\}/g) || []).length !== 1) continue;
+          const [prefix, suffix] = template.split(placeholder[0]);
+          if (value.startsWith(prefix) && value.endsWith(suffix) && value.length >= prefix.length + suffix.length) {
+            variables[placeholder[1]] = value.slice(prefix.length, value.length - suffix.length || undefined);
+            output = translated;
+            break;
+          }
+        }
+      }
+      if (output === undefined) output = value;
+      for (const [name, replacement] of Object.entries(variables)) output = output.replaceAll(`{${name}}`, replacement);
+      return output;
+    }
+
+    function translateTree(root) {
+      if (root.nodeType === Node.TEXT_NODE) {
+        translateTextNode(root);
+        return;
+      }
+      const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+      let textNode;
+      while ((textNode = walker.nextNode())) translateTextNode(textNode);
+      const elements = root.nodeType === Node.ELEMENT_NODE ? [root, ...root.querySelectorAll("*")] : [...root.querySelectorAll("*")];
+      for (const element of elements) {
+        let sources = originalAttributes.get(element);
+        for (const attribute of ["aria-label", "placeholder", "title"]) {
+          if (!element.hasAttribute(attribute)) continue;
+          if (!sources) { sources = {}; originalAttributes.set(element, sources); }
+          if (!(attribute in sources)) sources[attribute] = element.getAttribute(attribute);
+          element.setAttribute(attribute, translateText(sources[attribute]));
+        }
+      }
+    }
+
+    function translateTextNode(node) {
+      const source = originalText.has(node) ? originalText.get(node) : node.nodeValue;
+      if (!originalText.has(node)) originalText.set(node, source);
+      const trimmed = source.trim();
+      if (!trimmed) return;
+      const start = source.indexOf(trimmed);
+      node.nodeValue = `${source.slice(0, start)}${translateText(trimmed)}${source.slice(start + trimmed.length)}`;
+    }
+
+    function applyLanguage() {
+      const settings = LANGUAGE_SETTINGS[languagePreference] || LANGUAGE_SETTINGS.en;
+      document.documentElement.lang = languagePreference;
+      document.documentElement.dir = settings.direction;
+      document.querySelectorAll("#language-select, #auth-language-select").forEach((select) => { select.value = languagePreference; });
+      translateTree(document.body);
+    }
+
+    async function setLanguagePreference(language) {
+      if (!LANGUAGE_SETTINGS[language]) return;
+      languagePreference = language;
+      localStorage.setItem(KEYS.language, language);
+      if (currentUser) localStorage.setItem(`${KEYS.language}.${currentUser.id}`, language);
+      applyLanguage();
+      if (!document.body.classList.contains("auth-required")) {
+        renderPrayers();
+        renderEvents();
+      }
+      if (!supabaseClient || !currentUser) return;
+      const { error } = await supabaseClient.from("language_preferences").upsert({
+        user_id: currentUser.id,
+        language,
+        updated_at: new Date().toISOString()
+      }, { onConflict: "user_id" });
+      if (error) showStatus(translateText("Language preference could not be saved: {error}", { error: error.message }), true);
+    }
+
+    const languageObserver = new MutationObserver((mutations) => {
+      for (const mutation of mutations) for (const node of mutation.addedNodes) translateTree(node);
+    });
+    languageObserver.observe(document.body, { childList: true, subtree: true });
+    document.querySelectorAll("#language-select, #auth-language-select").forEach((select) => select.addEventListener("change", (event) => {
+      setLanguagePreference(event.currentTarget.value).catch((error) => showStatus(translateText("Language preference could not be saved: {error}", { error: error.message }), true));
+    }));
+    applyLanguage();
+
+    function showStatus(message, isError = false) {
+      const status = $("#app-status");
+      status.textContent = message;
+      status.classList.toggle("error", isError);
+      status.hidden = !message;
+    }
+    function showFormMessage(selector, message, isError = false) {
+      const target = $(selector);
+      if (!target) {
+        showStatus(message, isError);
+        return;
+      }
+      target.textContent = message;
+      target.style.color = isError ? "var(--rose)" : "";
+    }
+    const escapeHTML = (value) => String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+    const dateAtNoon = (value) => new Date(`${value}T12:00:00`);
+    const dateKey = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+    const fmtDate = (date, options) => new Intl.DateTimeFormat(LANGUAGE_SETTINGS[languagePreference]?.locale || "en-US", options).format(date);
+    const selectedMosque = () => mosques.find((mosque) => mosque.id === selectedMosqueId);
+    const canManageCurrentMosque = () => currentUser?.role === "superadmin" || (currentUser?.role === "mosque-admin" && currentUser.mosqueId === selectedMosqueId);
+    const timeValue = (value) => String(value || "").slice(0, 5);
+
+    async function loadRemoteWorkspace(authUser) {
+      const [profileResult, mosqueResult, preferenceResult] = await Promise.all([
+        supabaseClient.from("profiles").select("id, email, full_name, role, mosque_id").eq("id", authUser.id).single(),
+        supabaseClient.from("mosques").select("id, name, owner_id").order("name"),
+        supabaseClient.from("language_preferences").select("language").eq("user_id", authUser.id).maybeSingle()
+      ]);
+      if (profileResult.error) throw profileResult.error;
+      if (mosqueResult.error) throw mosqueResult.error;
+
+      const profile = profileResult.data;
+      currentUser = { id: profile.id, email: profile.email, name: profile.full_name, role: profile.role, mosqueId: profile.mosque_id };
+      languagePreference = preferenceResult.data?.language
+        || localStorage.getItem(`${KEYS.language}.${profile.id}`)
+        || localStorage.getItem(KEYS.language)
+        || "en";
+      applyLanguage();
+      if (preferenceResult.error) showStatus(translateText("Language preference could not be loaded: {error}", { error: preferenceResult.error.message }), true);
+      else if (!preferenceResult.data) {
+        const { error } = await supabaseClient.from("language_preferences").upsert({ user_id: profile.id, language: languagePreference });
+        if (error) showStatus(translateText("Language preference could not be saved: {error}", { error: error.message }), true);
+      }
+      mosques = mosqueResult.data.map((mosque) => ({ id: mosque.id, name: mosque.name, ownerId: mosque.owner_id }));
+      if (!mosques.length) throw new Error("No mosque is configured in the Supabase database.");
+
+      const preferredMosqueId = currentUser.role === "mosque-admin" ? currentUser.mosqueId : read(KEYS.selectedMosque, null);
+      selectedMosqueId = mosques.some((mosque) => mosque.id === preferredMosqueId) ? preferredMosqueId : mosques[0].id;
+      await loadRemoteMosque(selectedMosqueId);
+      renderMosqueSelector();
+      renderAccount();
+      renderPrayers();
+      renderEvents();
+      document.body.classList.remove("auth-required");
+      $("#auth-overlay").classList.remove("open", "auth-gate");
+    }
+
+    async function loadRemoteMosque(mosqueId) {
+      const [prayerResult, eventResult, ramadanResult] = await Promise.all([
+        supabaseClient.from("prayer_times").select("prayer_name, muazzin, adhan, iqama, imam, sort_order").eq("mosque_id", mosqueId).order("sort_order"),
+        supabaseClient.from("events").select("id, title, event_date, event_time, details, category").eq("mosque_id", mosqueId).order("event_date").order("event_time"),
+        supabaseClient.from("ramadan_settings").select("start_date, tarawih, tahajjud").eq("mosque_id", mosqueId).maybeSingle()
+      ]);
+      if (prayerResult.error) throw prayerResult.error;
+      if (eventResult.error) throw eventResult.error;
+      if (ramadanResult.error) throw ramadanResult.error;
+
+      schedule = normalizeSchedule(prayerResult.data.map((prayer) => ({
+        name: prayer.prayer_name,
+        muazzin: prayer.muazzin,
+        adhan: timeValue(prayer.adhan),
+        iqama: timeValue(prayer.iqama),
+        imam: prayer.imam
+      })));
+      if (!prayerResult.data.length) schedule = DEFAULT_SCHEDULE.map((prayer) => ({ ...prayer }));
+      events = eventResult.data.map((event) => ({
+        id: event.id,
+        title: event.title,
+        date: event.event_date,
+        time: timeValue(event.event_time),
+        details: event.details,
+        category: event.category
+      }));
+      const savedRamadan = ramadanResult.data;
+      ramadanSettings = normalizeRamadanSettings(savedRamadan ? {
+        startDate: savedRamadan.start_date,
+        tarawih: savedRamadan.tarawih,
+        tahajjud: savedRamadan.tahajjud
+      } : null);
+      write(KEYS.selectedMosque, mosqueId);
+    }
+
+    async function saveRemotePrayerTimes() {
+      const rows = schedule.map((prayer, index) => ({
+        mosque_id: selectedMosqueId,
+        prayer_name: prayer.name,
+        sort_order: index + 1,
+        muazzin: prayer.muazzin,
+        adhan: prayer.adhan,
+        iqama: prayer.iqama,
+        imam: prayer.imam,
+        updated_at: new Date().toISOString()
+      }));
+      const { error } = await supabaseClient.from("prayer_times").upsert(rows, { onConflict: "mosque_id,prayer_name" });
+      if (error) throw error;
+    }
+
+    async function saveRemoteRamadanSettings() {
+      const { error } = await supabaseClient.from("ramadan_settings").upsert({
+        mosque_id: selectedMosqueId,
+        start_date: ramadanSettings.startDate,
+        tarawih: ramadanSettings.tarawih,
+        tahajjud: ramadanSettings.tahajjud,
+        updated_at: new Date().toISOString()
+      }, { onConflict: "mosque_id" });
+      if (error) throw error;
+    }
+
+    function normalizeSchedule(existing) {
+      return DEFAULT_SCHEDULE.map((prayer) => {
+        const saved = existing.find((item) => item.name === prayer.name) || {};
+        return { ...prayer, ...saved, muazzin: saved.muazzin || saved.muezzin || "", iqama: saved.iqama || saved.iqamah || prayer.iqama };
+      });
+    }
+
+    function getHijriParts(date) {
+      const parts = new Intl.DateTimeFormat("en-u-ca-islamic-umalqura-nu-latn", { day: "numeric", month: "numeric", year: "numeric" }).formatToParts(date);
+      return Object.fromEntries(parts.filter((part) => part.type !== "literal").map((part) => [part.type, Number(part.value)]));
+    }
+
+    function formatHijriDate(date) {
+      return new Intl.DateTimeFormat(`${LANGUAGE_SETTINGS[languagePreference]?.locale || "en-US"}-u-ca-islamic-umalqura`, { day: "numeric", month: "long", year: "numeric" }).format(date);
+    }
+
+    function findNextRamadanStart() {
+      const date = new Date();
+      date.setHours(12, 0, 0, 0);
+      for (let offset = 0; offset < 500; offset++) {
+        const parts = getHijriParts(date);
+        if (parts.month === 9 && parts.day === 1) return dateKey(date);
+        date.setDate(date.getDate() + 1);
+      }
+      return dateKey(new Date());
+    }
+
+    function defaultRamadanSettings() {
+      return { startDate: findNextRamadanStart(), tarawih: makePlanRows(20), tahajjud: makePlanRows(10) };
+    }
+
+    function makePlanRows(count) {
+      return Array.from({ length: count }, () => Object.fromEntries(PLAN_COLUMNS.map((column) => [column, { imam: "", startDetail: "", endDetail: "" }])));
+    }
+
+    function normalizePlanRows(saved, legacyText, legacyImam, count) {
+      const legacyLines = String(legacyText || "").split("\n").map((line) => line.trim()).filter(Boolean);
+      return Array.from({ length: count }, (_, index) => {
+        const source = saved?.[index] || {};
+        const row = Object.fromEntries(PLAN_COLUMNS.map((column) => {
+          const value = typeof source[column] === "string" ? { startDetail: source[column] } : source[column] || {};
+          return [column, { imam: value.imam || "", startDetail: value.startDetail || "", endDetail: value.endDetail || "" }];
+        }));
+        if (!saved && legacyLines[index]) {
+          const separator = legacyLines[index].indexOf("|");
+          row.firstTwo.imam = legacyImam || "";
+          row.firstTwo.startDetail = separator < 0 ? legacyLines[index] : legacyLines[index].slice(separator + 1).trim();
+        }
+        return row;
+      });
+    }
+
+    function normalizeRamadanSettings(settings) {
+      const saved = settings || {};
+      return {
+        startDate: saved.startDate || findNextRamadanStart(),
+        tarawih: normalizePlanRows(saved.tarawih, saved.tarawihPlan, saved.tarawihImam, 20),
+        tahajjud: normalizePlanRows(saved.tahajjud, saved.tahajjudPlan, saved.tahajjudImam, 10)
+      };
+    }
+
+    function getRamadanDayCount(startDate) {
+      const start = dateAtNoon(startDate);
+      const initial = getHijriParts(start);
+      let count = 0;
+      for (let offset = 0; offset < 30; offset++) {
+        const date = new Date(start);
+        date.setDate(start.getDate() + offset);
+        const parts = getHijriParts(date);
+        if (offset > 0 && (parts.month !== initial.month || parts.year !== initial.year)) break;
+        count++;
+      }
+      return count;
+    }
+
+    async function persistRamadanSettings() {
+      ramadanByMosque[selectedMosqueId] = ramadanSettings;
+      if (supabaseClient) await saveRemoteRamadanSettings();
+      else write(KEYS.ramadan, ramadanByMosque);
+    }
+
+    function persistMosqueData() {
+      mosqueSchedules[selectedMosqueId] = schedule;
+      mosqueEvents[selectedMosqueId] = events;
+      write(KEYS.schedules, mosqueSchedules);
+      write(KEYS.mosqueEvents, mosqueEvents);
+    }
+
+    function renderMosqueSelector() {
+      const selector = $("#mosque-selector");
+      selector.innerHTML = mosques.map((mosque) => `<option value="${escapeHTML(mosque.id)}">${escapeHTML(mosque.name)}</option>`).join("");
+      selector.value = selectedMosqueId;
+      const name = selectedMosque()?.name || "AL FATH";
+      $(".brand").setAttribute("aria-label", "AL-MASJID home");
+      $("#hero-mosque-name").textContent = `${name} ${translateText("Mosque")}`;
+      $("#footer-mosque-name").textContent = name;
+      document.title = "AL-MASJID | Mosque & Community";
+    }
+
+    async function switchMosque(mosqueId) {
+      if (!mosques.some((mosque) => mosque.id === mosqueId)) return;
+      const previousMosqueId = selectedMosqueId;
+      selectedMosqueId = mosqueId;
+      if (supabaseClient) {
+        write(KEYS.selectedMosque, selectedMosqueId);
+        try {
+          await loadRemoteMosque(mosqueId);
+          renderMosqueSelector();
+          renderAccount();
+          renderPrayers();
+          renderEvents();
+          if ($("#view-admin").classList.contains("active") && !canManageCurrentMosque()) showView("home");
+          showStatus("");
+        } catch (error) {
+          selectedMosqueId = previousMosqueId;
+          renderMosqueSelector();
+          showStatus(`Could not load this mosque: ${error.message}`, true);
+        }
+        return;
+      }
+      schedule = mosqueSchedules[mosqueId] || DEFAULT_SCHEDULE.map((prayer) => ({ ...prayer }));
+      schedule = normalizeSchedule(schedule);
+      events = mosqueEvents[mosqueId] || [];
+      ramadanSettings = normalizeRamadanSettings(ramadanByMosque[mosqueId]);
+      mosqueSchedules[mosqueId] = schedule;
+      ramadanByMosque[mosqueId] = ramadanSettings;
+      write(KEYS.schedules, mosqueSchedules);
+      write(KEYS.ramadan, ramadanByMosque);
+      write(KEYS.selectedMosque, selectedMosqueId);
+      renderMosqueSelector();
+      renderAccount();
+      renderPrayers();
+      renderEvents();
+      if ($("#view-admin").classList.contains("active")) {
+        if (canManageCurrentMosque()) renderAdmin();
+        else showView("home");
+      }
+    }
+
+    function seedEvents(mosqueId = selectedMosqueId) {
+      if (mosqueId !== mosques[0].id || mosqueEvents[mosqueId]?.length) return;
+      const friday = new Date();
+      friday.setHours(12, 0, 0, 0);
+      while (friday.getDay() !== 5) friday.setDate(friday.getDate() + 1);
+      const community = new Date();
+      community.setDate(community.getDate() + 3);
+      mosqueEvents[mosqueId] = [
+        { id: crypto.randomUUID(), title: "Jumu'ah Prayer", date: dateKey(friday), time: "13:00", details: "Khutbah followed by congregational prayer.", category: "Prayer" },
+        { id: crypto.randomUUID(), title: "Community tea & meet-up", date: dateKey(community), time: "18:30", details: "A relaxed evening to catch up with neighbors. All are welcome.", category: "Community" }
+      ];
+      write(KEYS.mosqueEvents, mosqueEvents);
+      if (mosqueId === selectedMosqueId) events = mosqueEvents[mosqueId];
+    }
+
+    function renderAccount() {
+      const area = $("#account-area");
+      $("#admin-nav").hidden = !canManageCurrentMosque();
+      if (currentUser) {
+        area.innerHTML = `<span class="user-name">${escapeHTML(currentUser.name)}</span><button class="account-button" id="logout-button">Sign out</button>`;
+        $("#logout-button").addEventListener("click", async () => {
+          if (supabaseClient) {
+            const { error } = await supabaseClient.auth.signOut();
+            if (error) { showStatus(`Could not sign out: ${error.message}`, true); return; }
+          } else localStorage.removeItem(KEYS.session);
+          currentUser = null;
+          renderAccount();
+          requireAuthentication();
+        });
+      } else {
+        area.innerHTML = `<button class="account-button" id="login-button">Sign in</button><button class="account-button primary" id="register-button">Join us</button>`;
+        $("#login-button").addEventListener("click", () => openAuth("login"));
+        $("#register-button").addEventListener("click", () => openAuth("register"));
+      }
+    }
+
+    function renderPrayers() {
+      const now = new Date();
+      const current = `${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      const next = schedule.find((prayer) => prayer.name !== "Jumu'ah" && prayer.adhan > current);
+      const nextName = next?.name || "Fajr";
+      $("#today-label").textContent = fmtDate(now, { weekday: "long", month: "long", day: "numeric" });
+      $("#hijri-today-label").textContent = formatHijriDate(now);
+      $("#next-prayer").textContent = next
+        ? translateText("Next prayer · {name} at {time}", { name: translateText(next.name), time: formatTime(next.adhan) })
+        : translateText("Next prayer · Fajr at {time} tomorrow", { time: formatTime(schedule[0].adhan) });
+      $("#home-prayers").innerHTML = schedule.filter((prayer) => prayer.name !== "Jumu'ah").map((prayer) => `<article class="prayer-card${prayer.name === nextName ? " next" : ""}"><div class="name">${escapeHTML(translateText(prayer.name))}</div><div class="time">${formatTime(prayer.adhan)}</div>${prayer.name === nextName ? `<div class="next-label">${escapeHTML(translateText("NEXT PRAYER"))}</div>` : ""}</article>`).join("");
+      $("#prayers-mosque-label").textContent = selectedMosque()?.name || "";
+      const publicScheduleRows = schedule.map((prayer) => `<tr><td>${escapeHTML(translateText(prayer.name))}</td><td>${escapeHTML(prayer.muazzin || translateText("To be announced"))}</td><td class="time-cell">${formatTime(prayer.adhan)}</td><td>${formatTime(prayer.iqama)}</td><td>${escapeHTML(prayer.imam || translateText("To be announced"))}</td></tr>`).join("");
+      $("#prayer-table").innerHTML = publicScheduleRows;
+    }
+
+    function formatTime(value) {
+      if (!value) return "—";
+      const [hour, minute] = value.split(":").map(Number);
+      return new Intl.DateTimeFormat(LANGUAGE_SETTINGS[languagePreference]?.locale || "en-US", { hour: "numeric", minute: "2-digit" }).format(new Date(2000, 0, 1, hour, minute));
+    }
+
+    function upcomingEvents(limit) {
+      const today = dateKey(new Date());
+      return events.filter((event) => event.date >= today).sort((a, b) => a.date.localeCompare(b.date) || a.time.localeCompare(b.time)).slice(0, limit);
+    }
+
+    function eventMarkup(event) {
+      const date = dateAtNoon(event.date);
+      return `<article class="event-row"><div class="event-date"><strong>${fmtDate(date, { day: "numeric" })}</strong><span>${fmtDate(date, { month: "short" })}</span></div><div><div class="event-title">${escapeHTML(event.title)}</div><p class="event-detail">${formatTime(event.time)}${event.details ? ` · ${escapeHTML(event.details)}` : ""}<span class="dual-date">${escapeHTML(formatHijriDate(date))}</span></p></div><span class="event-tag">${escapeHTML(translateText(event.category || "Community"))}</span></article>`;
+    }
+
+    function renderEvents() {
+      const upcoming = upcomingEvents(50);
+      const home = upcomingEvents(3);
+      $("#home-events").innerHTML = home.length ? home.map(eventMarkup).join("") : '<p class="empty-state">No upcoming events have been posted yet.</p>';
+      $("#calendar-events").innerHTML = upcoming.length ? upcoming.map(eventMarkup).join("") : '<p class="empty-state">No upcoming events. Check back soon.</p>';
+      renderCalendar(upcoming);
+      renderRamadan();
+      if (canManageCurrentMosque()) renderAdminEvents();
+    }
+
+    function renderCalendar(upcoming) {
+      const year = calendarCursor.getFullYear();
+      const month = calendarCursor.getMonth();
+      $("#month-label").textContent = fmtDate(calendarCursor, { month: "long", year: "numeric" });
+      $("#hijri-month-label").textContent = `${formatHijriDate(new Date(year, month, 1, 12))} – ${formatHijriDate(new Date(year, month + 1, 0, 12))}`;
+      const grid = $("#calendar-grid");
+      const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"].map((day) => `<div class="weekday">${escapeHTML(translateText(day))}</div>`);
+      const firstDay = new Date(year, month, 1).getDay();
+      const count = new Date(year, month + 1, 0).getDate();
+      const eventDates = new Set(events.map((event) => event.date));
+      for (let blank = 0; blank < firstDay; blank++) days.push('<div class="day blank" aria-hidden="true"></div>');
+      for (let day = 1; day <= count; day++) {
+        const date = new Date(year, month, day, 12);
+        const key = dateKey(date);
+        const todayClass = key === dateKey(new Date()) ? " today" : "";
+        const eventClass = eventDates.has(key) ? " has-event" : "";
+        days.push(`<div class="day${todayClass}${eventClass}" aria-label="${escapeHTML(fmtDate(date, { month: "long", day: "numeric", year: "numeric" }))}; ${escapeHTML(formatHijriDate(date))}${eventDates.has(key) ? "; event scheduled" : ""}"><span class="day-gregorian">${day}</span><span class="day-hijri">${getHijriParts(date).day}</span></div>`);
+      }
+      grid.innerHTML = days.join("");
+    }
+
+    function renderPlanTable(target, rows, firstNight = 1) {
+      target.innerHTML = rows.map((row, index) => {
+        const cells = PLAN_COLUMNS.map((column) => {
+          const entry = row[column] || { imam: "", startDetail: "", endDetail: "" };
+          const details = [
+            entry.imam ? `<div><strong>Imam:</strong> ${escapeHTML(entry.imam)}</div>` : "",
+            entry.startDetail ? `<div><strong>Starts:</strong> ${escapeHTML(entry.startDetail)}</div>` : "",
+            entry.endDetail ? `<div><strong>Ends:</strong> ${escapeHTML(entry.endDetail)}</div>` : ""
+          ].filter(Boolean).join("");
+          return `<td>${details ? `<div class="plan-entry">${details}</div>` : "—"}</td>`;
+        });
+        return `<tr><td>${escapeHTML(translateText("Night {number}", { number: firstNight + index }))}</td>${cells.join("")}</tr>`;
+      }).join("");
+    }
+
+    function planEditorRows(scheduleName, rows, firstNight = 1) {
+      return rows.map((row, index) => {
+        const cells = PLAN_COLUMNS.map((column) => {
+          const entry = row[column] || { imam: "", startDetail: "", endDetail: "" };
+          const prefix = `${scheduleName}-${index}-${column}`;
+          const ariaLabel = `${scheduleName} night ${firstNight + index} ${column}`;
+          return `<td><div class="plan-cell-fields"><input name="${prefix}-imam" aria-label="${ariaLabel} imam" maxlength="60" value="${escapeHTML(entry.imam)}" placeholder="Imam name"><input name="${prefix}-start" aria-label="${ariaLabel} starts" maxlength="80" value="${escapeHTML(entry.startDetail)}" placeholder="Start detail"><input name="${prefix}-end" aria-label="${ariaLabel} ends" maxlength="80" value="${escapeHTML(entry.endDetail)}" placeholder="End detail"></div></td>`;
+        });
+        return `<tr><td>${escapeHTML(translateText("Night {number}", { number: index + 1 }))}</td>${cells.join("")}</tr>`;
+      }).join("");
+    }
+
+    function readPlanForm(form, scheduleName, count) {
+      return Array.from({ length: count }, (_, index) => Object.fromEntries(PLAN_COLUMNS.map((column) => {
+        const prefix = `${scheduleName}-${index}-${column}`;
+        return [column, {
+          imam: String(form.get(`${prefix}-imam`) || "").trim(),
+          startDetail: String(form.get(`${prefix}-start`) || "").trim(),
+          endDetail: String(form.get(`${prefix}-end`) || "").trim()
+        }];
+      })));
+    }
+
+    function renderRamadan() {
+      if (!ramadanSettings) return;
+      $("#ramadan-mosque-label").textContent = selectedMosque()?.name || "";
+      const start = dateAtNoon(ramadanSettings.startDate);
+      const days = getRamadanDayCount(ramadanSettings.startDate);
+      const end = new Date(start);
+      end.setDate(end.getDate() + days - 1);
+      $("#ramadan-range").textContent = `${fmtDate(start, { month: "long", day: "numeric", year: "numeric" })} – ${fmtDate(end, { month: "long", day: "numeric", year: "numeric" })} · ${days} days`;
+      const today = dateKey(new Date());
+      const hijriYear = getHijriParts(start).year;
+      $("#ramadan-days").innerHTML = Array.from({ length: days }, (_, index) => {
+        const date = new Date(start);
+        date.setDate(start.getDate() + index);
+        const current = dateKey(date) === today ? " today" : "";
+        return `<div class="ramadan-day${current}"><strong>${escapeHTML(translateText("{number} Ramadan", { number: index + 1 }))}</strong><span>${fmtDate(date, { weekday: "short", month: "short", day: "numeric" })}</span><span>${hijriYear} AH · ${date.getFullYear()} CE</span></div>`;
+      }).join("");
+      renderPlanTable($("#tarawih-plan"), ramadanSettings.tarawih);
+      renderPlanTable($("#tahajjud-plan"), ramadanSettings.tahajjud, 21);
+    }
+
+    function showView(name) {
+      if (name === "admin" && !canManageCurrentMosque()) return;
+      document.querySelectorAll(".view").forEach((view) => view.classList.toggle("active", view.id === `view-${name}`));
+      document.querySelectorAll(".nav button[data-view]").forEach((button) => button.classList.toggle("active", button.dataset.view === name));
+      if (name === "admin") renderAdmin();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function renderAdmin() {
+      if (!canManageCurrentMosque()) return;
+      $("#mosque-name-input").value = selectedMosque()?.name || "";
+      $("#assignment-panel").hidden = currentUser?.role !== "superadmin";
+      $("#adhan-edit-list").innerHTML = schedule.map((prayer) => `<tr><td>${escapeHTML(prayer.name)}</td><td><input aria-label="${escapeHTML(prayer.name)} Mu'azin" name="muazzin-${escapeHTML(prayer.name)}" value="${escapeHTML(prayer.muazzin)}" maxlength="60" placeholder="Name"></td><td><input aria-label="${escapeHTML(prayer.name)} Adhan time" type="time" name="adhan-${escapeHTML(prayer.name)}" value="${escapeHTML(prayer.adhan)}" required></td><td><input aria-label="${escapeHTML(prayer.name)} Iqama time" type="time" name="iqama-${escapeHTML(prayer.name)}" value="${escapeHTML(prayer.iqama)}" required></td><td><input aria-label="${escapeHTML(prayer.name)} imam" name="imam-${escapeHTML(prayer.name)}" value="${escapeHTML(prayer.imam)}" maxlength="60" placeholder="Name"></td></tr>`).join("");
+      $("#ramadan-start").value = ramadanSettings.startDate;
+      $("#tarawih-edit-rows").innerHTML = planEditorRows("tarawih", ramadanSettings.tarawih);
+      $("#tahajjud-edit-rows").innerHTML = planEditorRows("tahajjud", ramadanSettings.tahajjud, 21);
+      renderAdminEvents();
+    }
+
+    function renderAdminEvents() {
+      const list = $("#admin-event-list");
+      if (!list) return;
+      list.innerHTML = events.length ? [...events].sort((a, b) => a.date.localeCompare(b.date)).map((event) => `<div class="admin-event-item"><div><div class="event-title">${escapeHTML(event.title)}</div><p class="event-detail">${fmtDate(dateAtNoon(event.date), { month: "short", day: "numeric", year: "numeric" })} · ${formatTime(event.time)}</p></div><button class="delete-button" data-delete-event="${escapeHTML(event.id)}">Remove</button></div>`).join("") : '<p class="empty-state">No events published yet.</p>';
+      list.querySelectorAll("[data-delete-event]").forEach((button) => button.addEventListener("click", async () => {
+        if (!canManageCurrentMosque()) return;
+        try {
+          if (supabaseClient) {
+            const { error } = await supabaseClient.from("events").delete().eq("id", button.dataset.deleteEvent).eq("mosque_id", selectedMosqueId);
+            if (error) throw error;
+          }
+          events = events.filter((event) => event.id !== button.dataset.deleteEvent);
+          if (!supabaseClient) persistMosqueData();
+          renderEvents();
+        } catch (error) {
+          showStatus(`Could not remove event: ${error.message}`, true);
+        }
+      }));
+    }
+
+    function openAuth(mode) {
+      authMode = mode;
+      $("#auth-form").reset();
+      $("#auth-message").textContent = "";
+      const firstAdmin = !supabaseClient && users.length === 0;
+      const register = mode === "register";
+      $("#auth-title").textContent = register ? (firstAdmin ? "Set up AL-MASJID" : "Join the community") : "Welcome back";
+      $("#auth-copy").textContent = register ? (firstAdmin ? "Create the first account to set up the mosque administrator. Later accounts will join as members." : "Create an account to keep up with mosque events, prayer times and Ramadan plans.") : "Sign in to your AL-MASJID community account.";
+      $("#name-field").hidden = !register;
+      $("#auth-name").required = register;
+      $("#auth-password").autocomplete = register ? "new-password" : "current-password";
+      $("#auth-submit").textContent = register ? (firstAdmin ? "Create administrator account" : "Create account") : "Sign in";
+      $("#auth-switch").innerHTML = register ? 'Already a member? <button type="button" data-auth-switch="login">Sign in</button>' : 'New to AL-MASJID? <button type="button" data-auth-switch="register">Create an account</button>';
+      $("#auth-switch button").addEventListener("click", () => openAuth($("#auth-switch button").dataset.authSwitch));
+      $("#auth-overlay").classList.add("open");
+      $(register ? "#auth-name" : "#auth-email").focus();
+    }
+
+    function requireAuthentication() {
+      document.body.classList.add("auth-required");
+      $("#auth-overlay").classList.add("auth-gate");
+      openAuth("login");
+    }
+
+    function randomSalt() {
+      return Array.from(crypto.getRandomValues(new Uint8Array(16)), (byte) => byte.toString(16).padStart(2, "0")).join("");
+    }
+
+    async function hashPassword(password, salt) {
+      const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(password), "PBKDF2", false, ["deriveBits"]);
+      const digest = await crypto.subtle.deriveBits({ name: "PBKDF2", salt: new TextEncoder().encode(salt), iterations: 210000, hash: "SHA-256" }, key, 256);
+      return Array.from(new Uint8Array(digest), (byte) => byte.toString(16).padStart(2, "0")).join("");
+    }
+
+    $("#auth-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const email = $("#auth-email").value.trim().toLowerCase();
+      const password = $("#auth-password").value;
+      const message = $("#auth-message");
+      if (supabaseClient) {
+        try {
+          if (authMode === "register") {
+            const { data, error } = await supabaseClient.auth.signUp({
+              email,
+              password,
+              options: { data: { full_name: $("#auth-name").value.trim() } }
+            });
+            if (error) throw error;
+            if (!data.session) {
+              message.textContent = "Check your email to confirm your account, then sign in.";
+              return;
+            }
+            await loadRemoteWorkspace(data.user);
+          } else {
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            if (error) throw error;
+            await loadRemoteWorkspace(data.user);
+          }
+          if (canManageCurrentMosque()) showView("admin");
+        } catch (error) {
+          message.textContent = error.message || "Authentication failed. Please try again.";
+        }
+        return;
+      }
+      const existingUser = users.find((user) => user.email === email);
+      const salt = authMode === "register" ? randomSalt() : existingUser?.salt || "";
+      const passwordHash = await hashPassword(password, salt);
+      if (authMode === "register") {
+        if (users.some((user) => user.email === email)) { message.textContent = "An account with this email already exists."; return; }
+          const user = { id: crypto.randomUUID(), name: $("#auth-name").value.trim(), email, salt, passwordHash, role: users.length === 0 ? "superadmin" : "member" };
+        users.push(user);
+          if (user.role === "superadmin") {
+            mosques[0].ownerId = user.id;
+            write(KEYS.mosques, mosques);
+          }
+        write(KEYS.users, users);
+        currentUser = user;
+        write(KEYS.session, user.id);
+      } else {
+        const user = users.find((item) => item.email === email && item.passwordHash === passwordHash);
+        if (!user) { message.textContent = "That email and password combination was not found."; return; }
+        currentUser = user;
+        write(KEYS.session, user.id);
+      }
+      $("#auth-overlay").classList.remove("open");
+      $("#auth-overlay").classList.remove("auth-gate");
+      document.body.classList.remove("auth-required");
+      if (currentUser.role === "mosque-admin" && currentUser.mosqueId) switchMosque(currentUser.mosqueId);
+      renderAccount();
+      renderEvents();
+      if (canManageCurrentMosque()) showView("admin");
+    });
+
+    document.querySelectorAll(".nav button[data-view]").forEach((button) => button.addEventListener("click", () => showView(button.dataset.view)));
+    document.querySelectorAll("[data-go]").forEach((button) => button.addEventListener("click", () => showView(button.dataset.go)));
+    document.querySelectorAll("[data-print-page]").forEach((button) => button.addEventListener("click", () => {
+      document.body.dataset.printPage = button.dataset.printPage;
+      window.print();
+    }));
+    window.addEventListener("afterprint", () => { delete document.body.dataset.printPage; });
+    $("#close-auth").addEventListener("click", () => { if (!document.body.classList.contains("auth-required")) $("#auth-overlay").classList.remove("open"); });
+    $("#auth-overlay").addEventListener("click", (event) => { if (event.target === $("#auth-overlay") && !document.body.classList.contains("auth-required")) $("#auth-overlay").classList.remove("open"); });
+    $("#prev-month").addEventListener("click", () => { calendarCursor.setMonth(calendarCursor.getMonth() - 1); renderCalendar(upcomingEvents(50)); });
+    $("#next-month").addEventListener("click", () => { calendarCursor.setMonth(calendarCursor.getMonth() + 1); renderCalendar(upcomingEvents(50)); });
+    $("#adhan-settings-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!canManageCurrentMosque()) return;
+      const form = new FormData(event.currentTarget);
+      schedule = schedule.map((prayer) => ({
+        ...prayer,
+        muazzin: String(form.get(`muazzin-${prayer.name}`) || "").trim(),
+        adhan: form.get(`adhan-${prayer.name}`),
+        iqama: form.get(`iqama-${prayer.name}`),
+        imam: String(form.get(`imam-${prayer.name}`) || "").trim()
+      }));
+      try {
+        if (supabaseClient) await saveRemotePrayerTimes();
+        else persistMosqueData();
+      } catch (error) {
+        showFormMessage("#adhan-settings-message", `Could not save prayer times: ${error.message}`, true);
+        return;
+      }
+      renderPrayers();
+      showFormMessage("#adhan-settings-message", "Prayer names, callers, times and imams updated.");
+    });
+    $("#ramadan-settings-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!canManageCurrentMosque()) return;
+      const form = new FormData(event.currentTarget);
+      ramadanSettings = {
+        startDate: String(form.get("startDate")),
+        tarawih: readPlanForm(form, "tarawih", 20),
+        tahajjud: readPlanForm(form, "tahajjud", 10)
+      };
+      try {
+        await persistRamadanSettings();
+        renderRamadan();
+        $("#ramadan-settings-message").textContent = "Ramadan calendar and prayer plans updated.";
+      } catch (error) {
+        $("#ramadan-settings-message").textContent = `Could not save Ramadan plans: ${error.message}`;
+      }
+    });
+    $("#mosque-settings-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!canManageCurrentMosque()) return;
+      const name = new FormData(event.currentTarget).get("name").trim();
+      if (!name) return;
+      try {
+        if (supabaseClient) {
+          const { error } = await supabaseClient.from("mosques").update({ name }).eq("id", selectedMosqueId);
+          if (error) throw error;
+        } else write(KEYS.mosques, mosques.map((mosque) => mosque.id === selectedMosqueId ? { ...mosque, name } : mosque));
+        selectedMosque().name = name;
+        renderMosqueSelector();
+        $("#mosque-settings-message").textContent = "Mosque name updated.";
+      } catch (error) {
+        $("#mosque-settings-message").textContent = `Could not update mosque name: ${error.message}`;
+      }
+    });
+    $("#event-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      if (!canManageCurrentMosque()) return;
+      const eventForm = event.currentTarget;
+      const form = new FormData(eventForm);
+      const newEvent = { title: String(form.get("title")).trim(), date: String(form.get("date")), time: String(form.get("time")), details: String(form.get("details")).trim(), category: "Community" };
+      try {
+        if (supabaseClient) {
+          const { data, error } = await supabaseClient.from("events").insert({
+            mosque_id: selectedMosqueId,
+            title: newEvent.title,
+            event_date: newEvent.date,
+            event_time: newEvent.time,
+            details: newEvent.details,
+            category: newEvent.category,
+            created_by: currentUser.id
+          }).select("id").single();
+          if (error) throw error;
+          newEvent.id = data.id;
+        } else newEvent.id = crypto.randomUUID();
+        events.push(newEvent);
+        if (!supabaseClient) persistMosqueData();
+        eventForm.reset();
+        $("#event-message").textContent = "Event published to the community calendar.";
+        renderEvents();
+      } catch (error) {
+        $("#event-message").textContent = `Could not publish event: ${error.message}`;
+      }
+    });
+    $("#assignment-form").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const message = $("#assignment-message");
+      if (currentUser?.role !== "superadmin") return;
+      const assignmentForm = event.currentTarget;
+      const form = new FormData(assignmentForm);
+      const mosqueName = String(form.get("mosqueName")).trim();
+      const email = String(form.get("email")).trim().toLowerCase();
+      if (supabaseClient) {
+        try {
+          const { data, error } = await supabaseClient.rpc("assign_mosque_admin", { p_email: email, p_mosque_name: mosqueName });
+          if (error) throw error;
+          const assignment = data?.[0];
+          if (!assignment) throw new Error("The assignment was not returned by the server.");
+          mosques.push({ id: assignment.assigned_mosque_id, name: mosqueName, ownerId: null });
+          assignmentForm.reset();
+          message.textContent = `${assignment.assigned_member_name} can now manage ${mosqueName}.`;
+          await switchMosque(assignment.assigned_mosque_id);
+          showView("admin");
+        } catch (error) {
+          message.textContent = `Could not assign administrator: ${error.message}`;
+        }
+        return;
+      }
+      const target = users.find((user) => user.email === email);
+      if (!target) { message.textContent = "No account found. Ask this person to register as a member first."; return; }
+      if (target.role !== "member") { message.textContent = "This account already has an administrator role."; return; }
+      const mosque = { id: crypto.randomUUID(), name: mosqueName, ownerId: target.id };
+      target.role = "mosque-admin";
+      target.mosqueId = mosque.id;
+      mosques.push(mosque);
+      mosqueSchedules[mosque.id] = DEFAULT_SCHEDULE.map((prayer) => ({ ...prayer }));
+      mosqueEvents[mosque.id] = [];
+      ramadanByMosque[mosque.id] = defaultRamadanSettings();
+      write(KEYS.users, users);
+      write(KEYS.mosques, mosques);
+      write(KEYS.schedules, mosqueSchedules);
+      write(KEYS.mosqueEvents, mosqueEvents);
+      write(KEYS.ramadan, ramadanByMosque);
+      event.currentTarget.reset();
+      message.textContent = `${target.name} can now manage ${mosque.name}.`;
+      switchMosque(mosque.id);
+      showView("admin");
+    });
+    $("#mosque-selector").addEventListener("change", (event) => switchMosque(event.currentTarget.value));
+
+    function initializeLocalWorkspace() {
+      const sessionId = localStorage.getItem(KEYS.session);
+      currentUser = users.find((user) => user.id === sessionId) || null;
+      languagePreference = localStorage.getItem(`${KEYS.language}.${currentUser?.id || "guest"}`) || localStorage.getItem(KEYS.language) || "en";
+      applyLanguage();
+      if (!currentUser) localStorage.removeItem(KEYS.session);
+      if (currentUser?.role === "mosque-admin" && currentUser.mosqueId && mosques.some((mosque) => mosque.id === currentUser.mosqueId)) selectedMosqueId = currentUser.mosqueId;
+      mosques.forEach((mosque) => {
+        mosqueSchedules[mosque.id] = normalizeSchedule(mosqueSchedules[mosque.id] || DEFAULT_SCHEDULE);
+        if (!Array.isArray(mosqueEvents[mosque.id])) mosqueEvents[mosque.id] = [];
+        ramadanByMosque[mosque.id] = normalizeRamadanSettings(ramadanByMosque[mosque.id]);
+      });
+      write(KEYS.schedules, mosqueSchedules);
+      write(KEYS.mosqueEvents, mosqueEvents);
+      write(KEYS.ramadan, ramadanByMosque);
+      schedule = mosqueSchedules[selectedMosqueId];
+      events = mosqueEvents[selectedMosqueId] || [];
+      ramadanSettings = ramadanByMosque[selectedMosqueId];
+      seedEvents(mosques[0].id);
+      renderMosqueSelector();
+      renderAccount();
+      if (!currentUser) requireAuthentication();
+      renderPrayers();
+      renderEvents();
+    }
+
+    async function initializeWorkspace() {
+      $("#storage-note").textContent = supabaseClient
+        ? "Accounts and mosque updates are shared through the configured Supabase project."
+        : "This demo stores accounts and mosque updates in this browser only. Existing local demo data is not transferred when Supabase is configured.";
+      if (remoteConfigured && !supabaseClient) {
+        requireAuthentication();
+        $("#auth-message").textContent = "The Supabase client could not load. Check your internet connection and reload.";
+        return;
+      }
+      if (!supabaseClient) {
+        initializeLocalWorkspace();
+        return;
+      }
+      requireAuthentication();
+      try {
+        const { data, error } = await supabaseClient.auth.getSession();
+        if (error) throw error;
+        if (!data.session) {
+          renderAccount();
+          requireAuthentication();
+          return;
+        }
+        await loadRemoteWorkspace(data.session.user);
+      } catch (error) {
+        renderAccount();
+        requireAuthentication();
+        $("#auth-message").textContent = `Could not connect to AL-MASJID: ${error.message}`;
+      }
+    }
+
+    initializeWorkspace();
+  </script>
+</body>
+</html>
